@@ -1,0 +1,78 @@
+/* =========================================
+   VARIABLES & RESET
+   ========================================= */
+:root {
+    --bg-cream: #FDF7EE;
+    --text-dark: #1D1D1B;
+    --primary-green: #2DCC70;
+    --border-color: #E5E5E5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    text-align: center; /* Centers the whole page */
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+.navbar {
+    padding: 24px 40px;
+    display: flex; justify-content: flex-start;
+}
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: inherit; }
+.logo-mark { width: 32px; height: 32px; background-color: var(--text-dark); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+/* =========================================
+   HERO / IMPACT SECTION
+   ========================================= */
+.hero {
+    margin-top: 60px;
+    padding: 20px;
+}
+
+.badge {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-dark);
+    padding: 6px 16px; border-radius: 50px;
+    font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+}
+
+.section-title {
+    font-size: 3.5rem; font-weight: 800;
+    letter-spacing: -1.5px; margin-top: 24px; line-height: 1.1;
+}
+
+/* The Massive Number from your screenshot */
+.huge-number {
+    font-size: 12rem;
+    font-weight: 800;
+    color: var(--primary-green);
+    line-height: 1;
+    margin: 20px 0;
+    letter-spacing: -5px;
+}
+
+.impact-subtitle { font-size: 1.5rem; font-weight: 700; }
+.impact-desc { color: #6b7280; margin-top: 12px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+.btn-green {
+    background-color: var(--primary-green);
+    color: white; padding: 18px 40px; border-radius: 50px;
+    border: none; font-weight: 800; font-size: 1rem;
+    cursor: pointer; display: inline-block; text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.btn-green:hover { transform: scale(1.05); }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+    .section-title { font-size: 2.5rem; }
+    .huge-number { font-size: 6rem; letter-spacing: -2px; }
+}   

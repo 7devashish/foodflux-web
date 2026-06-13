@@ -1,0 +1,101 @@
+/* =========================================
+   VARIABLES & RESET
+   ========================================= */
+:root {
+    --bg-cream: #FDF7EE;
+    --text-dark: #1D1D1B;
+    --primary-green: #2DCC70;
+    --primary-green-hover: #25a85c;
+    --card-white: #FFFFFF;
+    --card-warm: #F5EFE6;
+    --border-color: #E5E5E5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* =========================================
+   NAVBAR & HEADER
+   ========================================= */
+.navbar { padding: 24px 40px; display: flex; justify-content: flex-start; }
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: inherit; }
+.logo-mark { width: 32px; height: 32px; background-color: var(--text-dark); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+.modular-section { padding: 0 40px; max-width: 1400px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 40px; }
+.badge { background: white; border: 1px solid var(--border-color); color: var(--text-dark); padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+.section-title { font-size: 3rem; font-weight: 800; letter-spacing: -1.5px; margin-top: 16px; }
+.section-desc { color: #6b7280; margin-top: 12px; font-size: 1rem; }
+
+/* =========================================
+   VERTICAL FEED LAYOUT
+   ========================================= */
+.vertical-feed {
+    display: flex;
+    flex-direction: column; /* This forces the vertical stacking */
+    gap: 20px;
+    max-width: 800px; /* Constrains the width so it looks like a neat timeline */
+    margin: 0 auto 80px;
+}
+
+/* =========================================
+   WIDE LIST CARDS
+   ========================================= */
+.list-card {
+    border-radius: 30px;
+    padding: 32px;
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    width: 100%;
+}
+
+.card-white { background-color: var(--card-white); }
+.card-warm { background-color: var(--card-warm); }
+
+.card-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.icon-circle {
+    width: 64px; height: 64px; min-width: 64px;
+    background-color: #f3f4f6; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 2rem;
+}
+
+.bg-white { background-color: white !important; }
+
+.card-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+.card-desc { color: #4b5563; font-size: 0.95rem; line-height: 1.6; }
+
+.btn-green {
+    background-color: var(--primary-green); color: white; padding: 14px 28px;
+    border-radius: 50px; border: none; font-weight: 800; cursor: pointer;
+    transition: background-color 0.3s ease; white-space: nowrap;
+}
+
+.btn-green:hover { background-color: var(--primary-green-hover); }
+
+/* Mobile Responsiveness (Stacks the row into a column on small screens) */
+@media screen and (max-width: 768px) {
+    .modular-section { padding: 0 20px; }
+    .section-title { font-size: 2.5rem; }
+    
+    .list-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    
+    .card-right { width: 100%; }
+    .btn-green { width: 100%; }
+}

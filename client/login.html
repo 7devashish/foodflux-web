@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Join - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/login.css">
+</head>
+<body class="login-body">
+
+    <nav class="navbar">
+        <a href="/" class="logo" style="text-decoration: none; color: inherit;">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Login</button>
+                <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <form id="login-form" class="auth-form active-form">
+                <h2 class="form-title">Welcome Back</h2>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" placeholder="you@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-green full-width mt-4">LOGIN</button>
+                <p class="error-msg" id="login-error"></p>
+            </form>
+
+            <form id="signup-form" class="auth-form">
+                <h2 class="form-title">Join FoodFlux</h2>
+                
+                <div class="role-selector">
+                    <label class="role-card">
+                        <input type="radio" name="role" value="caterer" checked>
+                        <div class="role-content">
+                            <span class="role-icon">🍲</span>
+                            <span class="role-name">I have food to donate</span>
+                            <span class="role-desc">(Caterer / Event)</span>
+                        </div>
+                    </label>
+                    <label class="role-card">
+                        <input type="radio" name="role" value="ngo">
+                        <div class="role-content">
+                            <span class="role-icon">💚</span>
+                            <span class="role-name">I need food</span>
+                            <span class="role-desc">(NGO / Charity)</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="input-group">
+                    <label>Organization Name</label>
+                    <input type="text" id="signup-name" placeholder="e.g. Hope Rise Foundation" required>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signup-email" placeholder="contact@org.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="signup-phone" placeholder="123-456-7890" required>
+                </div>
+                <div class="input-group">
+                    <label>City / Location</label>
+                    <input type="text" id="signup-location" placeholder="e.g. New York, NY" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a strong password" required>
+                </div>
+                
+                <button type="submit" class="btn-green full-width mt-4">CREATE ACCOUNT</button>
+                <p class="error-msg" id="signup-error"></p>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="/login.js"></script>
+</body>
+</html>

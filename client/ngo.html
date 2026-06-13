@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Food - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/ngo.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo" style="text-decoration: none; color: inherit;">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+        <ul class="nav-links" style="list-style: none; display: flex; gap: 32px;">
+            <li><a href="/" style="text-decoration: none; color: var(--text-dark); font-weight: 600;">Home</a></li>
+            <li><a href="/profile.html" style="text-decoration: none; color: var(--text-dark); font-weight: 600;">My Profile</a></li>
+        </ul>
+    </nav>
+
+    <section class="modular-section" style="padding-top: 40px;">
+        <div class="section-header">
+            <span class="badge">NGO Dashboard</span>
+            <h2 class="section-title">Available Donations</h2>
+            <p class="section-desc">Real-time surplus food listings ready for pickup in your area.</p>
+        </div>
+
+        <div class="vertical-feed" id="ngo-feed-container">
+            <p style="text-align: center; color: #6b7280;">Loading live feed...</p>
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('ngo-feed-container');
+            fetchSurplusFood(container);
+        });
+
+        // 1. BROUGHT BACK THE MISSING FETCH FUNCTION
+        async function fetchSurplusFood(container) {
+            try {
+                const token = localStorage.getItem('foodflux_token');
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                const response = await fetch('/api/surplus', { headers });
+                const data = await response.json(); 
+                
+                if(data.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; margin-top: 60px; color: #6b7280;">
+                            <div style="font-size: 3rem; margin-bottom: 16px;">📭</div>
+                            <h3>No donations available right now</h3>
+                            <p>Check back later when caterers post surplus food!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                renderCards(data, container); 
+            } catch (err) {
+                console.error("Network error, loading fallback...", err);
+                renderFallbackStream(container);
+            }
+        }
+
+        async function claimFood(id) {
+            if (!confirm("Are you sure you want to claim this food for pickup?")) return;
+
+            try {
+                const token = localStorage.getItem('foodflux_token');
+                const response = await fetch(`/api/surplus/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    alert("✅ Food claimed successfully! Please arrange for immediate pickup.");
+                    
+                    // 3. FIXED THE CONTAINER ID MISMATCH
+                    const container = document.getElementById('ngo-feed-container');
+                    fetchSurplusFood(container); 
+                } else {
+                    const data = await response.json();
+                    alert("❌ Failed to claim food: " + data.message);
+                }
+            } catch (err) {
+                alert("Network error while trying to claim food.");
+                console.error(err);
+            }
+        }
+
+        function renderCards(data, container) {
+            container.innerHTML = ''; 
+            data.forEach((post, index) => {
+                const isWarm = index % 2 === 0; 
+                const cardClass = isWarm ? 'list-card card-warm' : 'list-card card-white';
+                const deadline = new Date(post.pickupDeadline).toLocaleString();
+
+                // 2. BROUGHT BACK THE CLAIM BUTTON AND FORMATTED IT
+                const cardHTML = `
+                    <div class="${cardClass}" style="display: flex; justify-content: space-between; align-items: center; padding: 20px; border-radius: 16px; margin-bottom: 16px;">
+                        <div class="card-left" style="display: flex; align-items: center; gap: 16px;">
+                            <div class="icon-circle ${isWarm ? 'bg-white' : ''}" style="font-size: 24px;">🍲</div>
+                            <div class="card-info">
+                                <h3 class="card-title" style="margin-bottom: 4px;">${post.foodName}</h3>
+                                <p class="card-desc" style="font-size: 0.9rem; color: #4b5563;">
+                                    <strong>Amount:</strong> ${post.quantity} kg/meals &nbsp; | &nbsp; 
+                                    <strong>Location:</strong> ${post.location} <br>
+                                    <span style="color: #ef4444; font-size: 0.85rem; font-weight: 600;">Pickup by: ${deadline}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <button class="btn-green" style="padding: 10px 20px; border-radius: 8px; border: none; background-color: var(--primary-green); color: white; font-weight: bold; cursor: pointer;" onclick="claimFood('${post._id}')">CLAIM</button>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        function renderFallbackStream(container) {
+            const dummyData = [
+                { _id: '1', foodName: 'Wedding Buffet Leftovers', quantity: 25, location: 'Prestige Hall', pickupDeadline: '2026-02-22T20:00:00Z' },
+                { _id: '2', foodName: 'Dal Rice', quantity: 10, location: 'MITK', pickupDeadline: '2026-02-21T18:00:00Z' }
+            ];
+            renderCards(dummyData, container);
+        }
+    </script>

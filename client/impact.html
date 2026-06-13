@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Impact - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/impact.css">
+    <style>
+        .huge-number {
+            font-size: 10rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            line-height: 1;
+            margin: 20px 0;
+            letter-spacing: -4px;
+        }
+        @media screen and (max-width: 768px) {
+            .huge-number { font-size: 5rem; letter-spacing: -2px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo" style="text-decoration: none; color: inherit;">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+    </nav>
+
+    <div class="hero" style="margin-top: 60px;">
+        <span class="badge" style="background: white; border: 1px solid var(--border-color); color: var(--text-dark);">Our Impact</span>
+        <h2 class="section-title" style="margin-top: 24px;">Together, We're Making <br>A Difference</h2>
+        
+        <div class="huge-number" id="meals-saved">0</div>
+        
+        <h3 style="font-size: 1.5rem; font-weight: 700;">Meals Redistributed</h3>
+        <p style="color: #6b7280; margin-top: 12px; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Every dish shared through FoodFlux prevents waste and supports local communities in need.
+        </p>
+
+        <div style="margin-top: 40px;">
+            <a href="/caterer.html" class="btn-green" style="text-decoration: none; display: inline-block;">DONATE FOOD</a>
+        </div>
+    </div>
+
+    <script>
+        // A fun aesthetic touch: Number counting animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const target = 100; // We will replace this with live DB data later!
+            let current = 0;
+            const element = document.getElementById('meals-saved');
+            
+            const interval = setInterval(() => {
+                current += Math.ceil(target / 50);
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                element.innerText = current.toLocaleString();
+            }, 30);
+        });
+    </script>
+</body>
+</html>

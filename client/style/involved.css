@@ -1,0 +1,47 @@
+:root {
+    --bg-cream: #FDF7EE; --text-dark: #1D1D1B;
+    --primary-green: #2DCC70; --primary-green-hover: #25a85c;
+    --card-white: #FFFFFF; --card-warm: #F5EFE6; --border-color: #E5E5E5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-cream); color: var(--text-dark); line-height: 1.5; }
+
+.navbar { padding: 24px 40px; display: flex; justify-content: flex-start; }
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: inherit; }
+.logo-mark { width: 32px; height: 32px; background-color: var(--text-dark); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+/* HERO */
+.hero { text-align: center; padding: 60px 20px 40px; }
+.badge { background: #d1fae5; color: #065f46; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+.hero-title { font-size: 4rem; font-weight: 800; letter-spacing: -1.5px; margin-top: 24px; line-height: 1.1; }
+.hero-desc { color: #4b5563; font-size: 1.1rem; max-width: 500px; margin: 16px auto 0; }
+
+/* GRID */
+.involvement-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 1000px; margin: 0 auto 80px; padding: 0 40px; }
+.involvement-card { border-radius: 40px; padding: 48px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+.card-white { background-color: var(--card-white); }
+.card-warm { background-color: var(--card-warm); }
+
+.icon-circle { width: 56px; height: 56px; background-color: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin-bottom: 32px; }
+.bg-white { background-color: white !important; }
+
+.card-title { font-size: 2rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
+.card-desc { color: #4b5563; font-size: 1rem; line-height: 1.6; }
+
+.card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+.hashtag { font-weight: 700; font-size: 0.9rem; color: #6b7280; }
+.payment-options { display: flex; gap: 12px; }
+.fake-logo { font-size: 0.8rem; font-weight: 800; background: #f3f4f6; padding: 4px 12px; border-radius: 20px; color: #4b5563; }
+
+.arrow-btn { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--border-color); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+.arrow-btn:hover { background: #f9fafb; }
+.btn-green-circle { background-color: var(--primary-green); border: none; color: white; }
+.btn-green-circle:hover { background-color: var(--primary-green-hover); }
+
+@media screen and (max-width: 768px) {
+    .involvement-grid { grid-template-columns: 1fr; padding: 0 20px; }
+    .hero-title { font-size: 3rem; }
+    .involvement-card { min-height: 320px; padding: 32px; }
+}

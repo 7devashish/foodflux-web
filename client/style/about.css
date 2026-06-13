@@ -1,0 +1,38 @@
+:root {
+    --bg-cream: #FDF7EE; --text-dark: #1D1D1B;
+    --primary-green: #2DCC70; --card-white: #FFFFFF;
+    --card-warm: #F5EFE6; --border-color: #E5E5E5;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: 'Inter', sans-serif; background-color: var(--bg-cream); color: var(--text-dark); line-height: 1.5; }
+
+.navbar { padding: 24px 40px; display: flex; justify-content: flex-start; }
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: inherit; }
+.logo-mark { width: 32px; height: 32px; background-color: var(--text-dark); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+
+/* HERO SECTION */
+.about-hero { padding: 60px 40px; text-align: center; max-width: 900px; margin: 0 auto; }
+.badge { background: white; border: 1px solid var(--border-color); color: var(--text-dark); padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+.hero-title { font-size: 4.5rem; font-weight: 800; letter-spacing: -1.5px; margin-top: 24px; line-height: 1.1; }
+.hero-desc { color: #4b5563; font-size: 1.2rem; margin-top: 24px; line-height: 1.8; }
+
+/* VALUES GRID */
+.values-section { padding: 0 40px 80px; max-width: 1400px; margin: 0 auto; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { border-radius: 40px; padding: 48px; min-height: 340px; display: flex; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+.card-white { background-color: var(--card-white); }
+.card-warm { background-color: var(--card-warm); }
+.icon-circle { width: 56px; height: 56px; background-color: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin-bottom: 24px; }
+.bg-white { background-color: white !important; }
+.card-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
+.card-desc { color: #4b5563; font-size: 1rem; line-height: 1.6; }
+
+@media screen and (max-width: 768px) {
+    .about-hero { padding: 40px 20px; }
+    .hero-title { font-size: 3rem; }
+    .values-grid { grid-template-columns: 1fr; }
+    .values-section { padding: 0 20px 40px; }
+    .card { padding: 32px; min-height: auto; }
+}

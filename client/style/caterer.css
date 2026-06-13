@@ -1,0 +1,203 @@
+/* =========================================
+   VARIABLES & RESET
+   ========================================= */
+:root {
+    --bg-cream: #FDF7EE;
+    --text-dark: #1D1D1B;
+    --primary-green: #2DCC70;
+    --primary-green-hover: #25a85c;
+    --card-white: #FFFFFF;
+    --border-color: #E5E5E5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* =========================================
+   LAYOUT & NAVBAR
+   ========================================= */
+.login-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    padding: 24px 40px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo-mark {
+    width: 32px;
+    height: 32px;
+    background-color: var(--text-dark);
+    color: var(--bg-cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+/* =========================================
+   CARD CONTAINER
+   ========================================= */
+.auth-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.auth-card {
+    background: var(--card-white);
+    width: 100%;
+    border-radius: 40px;
+    padding: 48px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+/* =========================================
+   TYPOGRAPHY & BADGES
+   ========================================= */
+.badge {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.section-title {
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+/* =========================================
+   FORM INPUTS
+   ========================================= */
+.input-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4b5563;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: #fafafa;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+/* Focus State (The glowing green border when typing) */
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(45, 204, 112, 0.1);
+}
+
+/* Adjusting the disabled input (Unit field) */
+.input-group input:disabled {
+    cursor: not-allowed;
+    border-color: transparent;
+}
+
+/* Customizing the datetime-local picker text */
+input[type="datetime-local"] {
+    color: #4b5563;
+}
+
+/* =========================================
+   BUTTONS & MESSAGES
+   ========================================= */
+.btn-green {
+    background-color: var(--primary-green);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: none;
+    font-weight: 800;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-green:hover {
+    background-color: var(--primary-green-hover);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.error-msg {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 16px;
+    min-height: 20px; /* Prevents the page from jumping when the message appears */
+}
+
+/* =========================================
+   RESPONSIVE DESIGN (Mobile)
+   ========================================= */
+@media screen and (max-width: 600px) {
+    .auth-card {
+        padding: 32px 24px;
+        border-radius: 30px;
+    }
+    
+    .section-title {
+        font-size: 2rem !important;
+    }
+
+    /* Stack the Quantity and Unit inputs on small screens */
+    form > div[style*="display: flex"] {
+        flex-direction: column;
+        gap: 0 !important;
+    }
+}

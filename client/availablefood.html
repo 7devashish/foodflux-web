@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Food - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style/availablefood.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+    </nav>
+
+    <section class="modular-section" style="padding-top: 40px;">
+        <div class="section-header">
+            <span class="badge">Live Feed</span>
+            <h2 class="section-title">Available Donations</h2>
+            <p class="section-desc">Real-time surplus food listings ready for pickup. Scroll to view more.</p>
+        </div>
+
+        <div class="card-stream" id="feed-cards-container">
+            </div>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('feed-cards-container');
+            fetchSurplusFood(container);
+        });
+
+        async function fetchSurplusFood(container) {
+            try {
+                const token = localStorage.getItem('foodflux_token');
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                const response = await fetch('/api/surplus', { headers });
+                if (!response.ok) throw new Error("Not Authorized");
+                
+                const data = await response.json();
+                
+                if(data.length === 0) {
+                    renderFallbackStream(container);
+                    return;
+                }
+                renderCards(data, container);
+            } catch (err) {
+                console.warn("Loading fallback data for the stream...");
+                renderFallbackStream(container);
+            }
+        }
+
+        function renderCards(data, container) {
+            container.innerHTML = ''; 
+            data.forEach((post, index) => {
+                const isWarm = index % 2 === 0; 
+                const cardClass = isWarm ? 'card card-warm' : 'card card-white';
+                const deadline = new Date(post.pickupDeadline).toLocaleDateString();
+
+                const cardHTML = `
+                    <div class="${cardClass}">
+                        <div class="card-top">
+                            <div class="icon-circle bg-white">🍲</div>
+                            <h3 class="card-title">${post.foodName}</h3>
+                            <p class="card-desc">
+                                <strong>Amount:</strong> ${post.quantity} kg/meals<br>
+                                <strong>Location:</strong> ${post.location}<br>
+                                <strong>Deadline:</strong> ${deadline}
+                            </p>
+                        </div>
+                        <div class="card-bottom">
+                            <button class="btn-green" onclick="claimFood('${post._id}')">CLAIM FOOD</button>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+
+        function renderFallbackStream(container) {
+            const dummyData = [
+                { _id: '1', foodName: 'Wedding Buffet Leftovers', quantity: 25, location: 'Prestige Hall', pickupDeadline: '2026-02-22T20:00:00Z' },
+                { _id: '2', foodName: 'Dal Rice', quantity: 10, location: 'MITK', pickupDeadline: '2026-02-21T18:00:00Z' },
+                { _id: '3', foodName: 'Breakfast Items', quantity: 15, location: 'Sasthana', pickupDeadline: '2026-02-21T15:00:00Z' },
+                { _id: '4', foodName: 'Excess Produce', quantity: 40, location: 'Basrur', pickupDeadline: '2026-02-23T10:00:00Z' },
+                { _id: '5', foodName: 'Catered Sandwiches', quantity: 30, location: 'MAHE University Campus', pickupDeadline: '2026-02-21T16:00:00Z' }
+            ];
+            renderCards(dummyData, container);
+        }
+
+        function claimFood(id) {
+            alert("Claim logic coming next! You clicked ID: " + id);
+        }
+    </script>
+</body>
+</html>

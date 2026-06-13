@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style/profile.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/ngo.html" id="nav-feed">Available Food</a></li>
+            <li><a href="/caterer.html" id="nav-donate" style="display: none;">Donate Food</a></li>
+        </ul>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="avatar" id="profile-avatar">U</div>
+            <h1 class="profile-name" id="profile-name">Loading...</h1>
+            <span class="badge" id="profile-role">Role</span>
+        </div>
+
+        <div class="profile-card card-white">
+            <h3 style="margin-bottom: 16px; font-weight: 800;">Account Details</h3>
+            
+            <div class="detail-row">
+                <span class="detail-label">Email Address</span>
+                <span class="detail-value" id="profile-email">loading@email.com</span>
+            </div>
+            
+            <div class="detail-row" style="margin-top: 24px;">
+                <span class="detail-label">Platform Status</span>
+                <span class="detail-value" style="color: var(--primary-green); font-weight: 700;">Active Account</span>
+            </div>
+
+            <button id="logout-btn" class="btn-outline mt-4">LOG OUT</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Check if logged in
+            const userString = localStorage.getItem('foodflux_user');
+            if (!userString) {
+                window.location.href = '/login.html'; // Kick them out if not logged in
+                return;
+            }
+
+            const user = JSON.parse(userString);
+
+            // 2. Populate their data
+            document.getElementById('profile-name').innerText = user.name;
+            document.getElementById('profile-email').innerText = user.email || "No email provided";
+            document.getElementById('profile-role').innerText = user.role;
+            
+            // Set Avatar to first letter of their name
+            document.getElementById('profile-avatar').innerText = user.name.charAt(0).toUpperCase();
+
+            // 3. Smart Navbar: Show specific links based on role
+            if (user.role === 'Caterer') {
+                document.getElementById('nav-donate').style.display = 'block';
+                document.getElementById('nav-feed').style.display = 'none'; // Caterers don't need the feed
+            }
+
+            // 4. Handle Logout
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                localStorage.removeItem('foodflux_token');
+                localStorage.removeItem('foodflux_user');
+                window.location.href = '/'; // Send back to homepage
+            });
+        });
+    </script>
+</body>
+</html>

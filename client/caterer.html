@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Food - FoodFlux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #FDF7EE;
+            --text-dark: #1D1D1B;
+            --primary-green: #2DCC70;
+            --card-white: #FFFFFF;
+            --border-color: #E5E5E5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .navbar { padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 800; text-decoration: none; color: inherit; }
+        .logo-mark { width: 32px; height: 32px; background-color: var(--text-dark); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .nav-links { list-style: none; display: flex; gap: 32px; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; }
+
+        .form-container { max-width: 550px; margin: 40px auto; padding: 0 20px; }
+        .form-card { background: var(--card-white); padding: 40px; border-radius: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        
+        .form-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; text-align: center; }
+        .form-subtitle { color: #6b7280; text-align: center; margin-bottom: 32px; font-size: 0.95rem; }
+
+        .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .input-group label { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-dark); }
+        .input-group input { padding: 16px; border: 1px solid var(--border-color); border-radius: 16px; font-family: inherit; font-size: 1rem; background-color: #FAFAFA; transition: all 0.2s; }
+        .input-group input:focus { outline: none; border-color: var(--text-dark); background-color: #FFF; }
+
+        .btn-green { background-color: var(--primary-green); color: white; padding: 16px; border-radius: 50px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; width: 100%; margin-top: 12px; transition: transform 0.2s; }
+        .btn-green:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-mark">FF</div>
+            <span class="logo-text">FoodFlux</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/profile.html">My Profile</a></li>
+        </ul>
+    </nav>
+
+    <div class="form-container">
+        <div class="form-card">
+            <h1 class="form-title">Share Surplus Food</h1>
+            <p class="form-subtitle">List your extra meals so local verified NGOs can collect them immediately.</p>
+
+            <form id="caterer-form">
+                <div class="input-group">
+                    <label>What food items do you have?</label>
+                    <input type="text" id="food-name" placeholder="e.g., 50 Boxes of Pizza, Veg Pulav" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Quantity (Approximate Meals/KG)</label>
+                    <input type="number" id="food-quantity" placeholder="e.g., 50" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Pickup Location Address</label>
+                    <input type="text" id="food-location" placeholder="e.g., Grand Palace Hall, Main Road" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Available Until (Pickup Deadline)</label>
+                    <input type="datetime-local" id="food-deadline" required>
+                </div>
+
+                <button type="submit" class="btn-green">POST SURPLUS FOOD</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('foodflux_token');
+            // Security Check: If someone isn't logged in, send them away
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const catererForm = document.getElementById('caterer-form');
+
+            catererForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // 1. Collect form inputs
+                const foodName = document.getElementById('food-name').value;
+                const quantity = document.getElementById('food-quantity').value;
+                const location = document.getElementById('food-location').value;
+                const pickupDeadline = document.getElementById('food-deadline').value;
+
+                try {
+                    // 2. Make the HTTP POST request to your Node.js backend
+                    const response = await fetch('/api/surplus', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Includes JWT session token
+                        },
+                        body: JSON.stringify({ foodName, quantity, location, pickupDeadline })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert("🎉 Success! Your food listing is now live for local NGOs.");
+                        catererForm.reset(); // Wipe form clear for next entry
+                    } else {
+                        alert("❌ Error: " + (data.message || "Could not post food"));
+                    }
+                } catch (err) {
+                    alert("Network error. Please make sure your server is running.");
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

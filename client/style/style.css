@@ -1,0 +1,510 @@
+/* --- VARIABLES --- */
+:root {
+    --bg-cream: #FDF7EE;
+    --text-dark: #1D1D1B;
+    --primary-green: #2DCC70;
+    --primary-green-hover: #25a85c;
+    --card-white: #FFFFFF;
+    --card-warm: #F5EFE6;
+    --border-color: #E5E5E5;
+    
+    /* Font sizes */
+    --font-huge: 8rem;
+    --font-h2: 3.5rem;
+}
+
+/* --- RESET & BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #fdf7ee 0%, #e8f5e9 100%);
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 40px;
+    position: relative;
+    z-index: 2; /* Sits above the background blob */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo-mark {
+    width: 32px;
+    height: 32px;
+    background-color: var(--text-dark);
+    color: var(--bg-cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--text-dark);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* --- BUTTONS --- */
+button {
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+.btn-primary {
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.btn-primary:hover {
+    background: var(--text-dark);
+    color: var(--bg-cream);
+}
+
+.btn-green {
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--primary-green);
+    color: white;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.btn-green:hover {
+    background-color: var(--primary-green-hover);
+}
+
+.btn-outline {
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-outline:hover {
+    background: white;
+}
+
+/* --- HERO SECTION & LAYERING --- */
+.hero {
+    position: relative;
+    z-index: 1;
+    min-height: 550px; 
+    text-align: center;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Keeps flow uniform */
+}
+
+.hero-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    z-index: 1;           /* Background canvas layer */
+    pointer-events: none; /* Lets clicks pass through to foreground buttons */
+}
+
+.hero-blob spline-viewer {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-title, 
+.hero-buttons {
+    position: relative;
+    z-index: 2; /* Foreground layer sitting cleanly above WebGL canvas */
+}
+
+.hero-title {
+    font-size: var(--font-huge);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -3px;
+    color: #0F172A; /* Rich, dark, soft slate */
+    text-shadow: 0 0 16px rgba(253, 247, 238, 0.9); /* Soft cream-colored glow behind letters for high contrast against the 3D canvas */
+    margin-bottom: 0;
+}
+
+.inline-flex {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pill-image {
+    display: inline-block;
+    width: 280px;
+    height: 100px;
+    border-radius: 100px; /* Pill shape */
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.pill-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* --- MODULAR SECTION --- */
+.modular-section {
+    padding: 80px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.badge {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-size: var(--font-h2);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-top: 24px;
+}
+
+/* --- CSS GRID CARDS --- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.card {
+    border-radius: 40px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 340px;
+}
+
+.card-white, .card-warm {
+    /* Semi-transparent background allowing the cream color to bleed through softly */
+    background: rgba(255, 255, 255, 0.4); 
+    
+    /* The frosted glass blur effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* Soft border and subtle shadow for depth */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+    
+    /* Ensures smooth rounded corners */
+    border-radius: 32px; 
+    
+    /* Keeps your 3D tilt effect working smoothly */
+    transform-style: preserve-3d;  
+}
+
+/* Optional: Maintain distinct warm/white card tints */
+.card-white {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.card-warm {
+    /* Slightly adjusted tint for the warm card to blend nicely with the blur */
+    background: rgba(245, 239, 230, 0.4); 
+}
+
+.card-top, .card-bottom {
+    transform: translateZ(20px);
+}
+
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    background-color: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+}
+
+.bg-white {
+    background-color: white !important;
+}
+
+.card-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.card-desc {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.arrow-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-btn:hover {
+    background: #f9fafb;
+}
+
+.btn-green-circle {
+    background-color: var(--primary-green);
+    border: none;
+    color: white;
+}
+
+.btn-green-circle:hover {
+    background-color: var(--primary-green-hover);
+}
+
+/* --- GLASS PANEL COMPONENT --- */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05); /* Very light semi-transparent white */
+    backdrop-filter: blur(15px);          /* The "frosted" blur effect */
+    -webkit-backdrop-filter: blur(15px);   /* Required for Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* --- HERO FROSTED GLASS PANEL COMPONENT --- */
+.hero-glass-panel {
+    width: 90%;
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    background: rgba(253, 247, 238, 0.05); /* Updated opacity to 0.05 so the 3D blob is brilliantly visible */
+    border: 1px solid rgba(255, 255, 255, 0.6); 
+    border-radius: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-glass-panel .hero-buttons {
+    margin-bottom: 0;
+}
+
+/* =========================================
+   BREAKPOINTS (Responsive Design)
+   ========================================= */
+
+/* Mobile Breakpoint (Phones and small tablets) */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 20px;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* Hide nav links on mobile */
+    .nav-links {
+        display: none; 
+    }
+
+    /* Adjust massive hero text for small screens */
+    .hero-title {
+        font-size: 4rem;
+        letter-spacing: -1.5px;
+    }
+
+    /* Shrink the pill image for mobile */
+    .pill-image {
+        width: 140px;
+        height: 60px;
+    }
+
+    .inline-flex {
+        gap: 12px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .modular-section {
+        padding: 40px 20px;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    /* Stack cards in a single column on mobile */
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Restrict blob sizing on mobile so it doesn't overflow */
+    .hero-blob {
+        width: 300px;
+        height: 300px;
+    }
+
+    .hero-glass-panel {
+        padding: 40px 20px;
+        border-radius: 32px;
+        gap: 24px;
+    }
+}
+
+/* Tablet Breakpoint (iPads) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .navbar {
+        padding: 20px 32px;
+    }
+    
+    .nav-links {
+        display: none; /* Collapse links early on tablet to prevent crowding */
+    }
+
+    .hero-title {
+        font-size: 6rem;
+    }
+    
+    .pill-image {
+        width: 200px;
+        height: 80px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Make the 3rd card span full width on tablet to fill the grid nicely */
+    .card:nth-child(3) {
+        grid-column: span 2;
+    }
+}
+
+/* --- SPLINE WATERMARK REMOVAL OVERRIDE --- */
+.spline-watermark, 
+div:has(img[alt="Spline badge"]),
+#spline-badge {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
