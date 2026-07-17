@@ -8,6 +8,8 @@ const path = require('path'); // 1. Add this built-in Node module
 const authRoutes = require('./routes/authRoutes');
 const surplusRoutes = require('./routes/surplusRoutes');
 
+// Initialize cron jobs
+require('./config/cron');
 dotenv.config();
 const app = express();
 
@@ -36,10 +38,18 @@ app.use('/api/auth', authRoutes);
 app.use('/api/surplus', surplusRoutes);
 
 // 2. Serve the Frontend Files
-// Ensure the static directory references the client folder at the workspace root
-// __dirname is "server", so go up one level to reach the top-level client directory
-app.use(express.static(path.join(__dirname, '..', 'client')));
+// Ensure the static directory references the built client bundle
+// __dirname is "server", so go up one level to reach the client/dist directory
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
+// SPA fallback - serve index.html for all non-API routes
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+  } else {
+    res.status(404).json({ message: 'API route not found' });
+  }
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;

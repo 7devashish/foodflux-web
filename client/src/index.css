@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-cream: #FDF7EE;
+  --color-text-dark: #1D1D1B;
+  --color-primary-green: #2DCC70;
+  --color-primary-green-hover: #25a85c;
+  --color-card-white: #FFFFFF;
+  --color-card-warm: #F5EFE6;
+  --color-border-color: #E5E5E5;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  --animate-aurora: aurora 60s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes aurora {
+    0% { background-position: 50% 50%, 50% 50%; }
+    100% { background-position: 350% 50%, 350% 50%; }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+}
+
+/* Custom CSS classes for components */
+@layer components {
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_0_rgba(0,0,0,0.03)] rounded-[32px];
+  }
+  
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] rounded-3xl;
+  }
+  
+  .glow-green {
+    @apply shadow-[0_0_15px_rgba(45,204,112,0.5)];
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 16px rgba(253, 247, 238, 0.9);
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600;
+  }
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply font-sans bg-bg-cream text-text-dark antialiased;
+    background: linear-gradient(135deg, #fdf7ee 0%, #e8f5e9 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* Hide Spline watermark */
+  .spline-watermark, 
+  div:has(img[alt="Spline badge"]),
+  #spline-badge {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+  }
+}
