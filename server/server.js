@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path'); // 1. Add this built-in Node module
 
 // Import your routes
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require('./routes/authroutes');
 const surplusRoutes = require('./routes/surplusRoutes');
 
 // Initialize cron jobs
