@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react';
 
 export function useAuth() {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Read from localStorage on mount
-    const storedUser = localStorage.getItem('foodflux_user');
-    const storedToken = localStorage.getItem('foodflux_token');
-
-    if (storedUser && storedToken) {
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
-      setIsAuthenticated(true);
-    }
-  }, []);
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem('foodflux_user');
+    return stored ? JSON.parse(stored) : null;
+  });
+  const [token, setToken] = useState(() => localStorage.getItem('foodflux_token'));
+  const [isAuthenticated, setIsAuthenticated] = useState(() => !!localStorage.getItem('foodflux_token'));
 
   const login = (tokenData, userData) => {
     localStorage.setItem('foodflux_token', tokenData);
